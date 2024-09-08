@@ -62,15 +62,19 @@ function AddTask({ tasksList, setTasksList}) {
                 className='dark'>
             <ModalContent>
                 
-                <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
+                <ModalHeader className="flex flex-col gap-1">Add new task...</ModalHeader>
                 <ModalBody>
                     <input 
                         type="text"
                         value={taskName}
+                        placeholder="task name"
+                        className="py-2 px-4 rounded-xl"
                         onChange={(e) => setTaskName(e.target.value)}/>
                     <input 
                         type="text"
                         value={taskNotes}
+                        placeholder="task note"
+                        className="py-2 px-4 rounded-xl"
                         onChange={(e) => setTaskNotes(e.target.value)}/>
                 </ModalBody>
                 <ModalFooter>

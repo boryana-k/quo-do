@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import AddTask from "../components/AddTask";
 import TasksList from "../components/TasksList";
+import ListLabel from '../components/ListLabel';
 import { supabase } from '../createClient';
 
 function Home() {
@@ -23,11 +24,13 @@ function Home() {
     return (
         <>
             <div className="flex items-center justify-between">
-                <h3 className="text-2xl">Today</h3>
+                <h3 className="text-2xl">Today's tasks</h3>
                     <AddTask tasksList={tasksList} setTasksList={setTasksList}/>
             </div>
 
+            <ListLabel tasksList={tasksList}/>
             <TasksList tasksList={tasksList} />
+            
             
         </>
     );
