@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, ButtonGroup} from "@nextui-org/react";
 import addTaskIcon from '../icons/add-button.svg'
+import { supabase } from '../createClient';
+import { useNavigate } from "react-router-dom";
 
 function AddTask({ tasksList, setTasksList}) {
-    
+    const navigate = useNavigate();
+
     //control the modal visibility
     const [visible, setVisible] = useState(false);
 
@@ -17,26 +20,27 @@ function AddTask({ tasksList, setTasksList}) {
         setVisible(false);
     };
 
-    // input value
-    const [inputValue, setInputValue ] = useState('');
-    
-    // counter for tasks index
-    const [counter, setCounter] = useState(0);
+    // task details
+    const [taskName, setTaskName ] = useState('');
+    const [taskNotes, setTaskNotes] = useState('');
 
-    function updateCounter() {
-        setCounter(counter+1)
-    }
+    // adding task
+    async function addTask() {
+        const { data } = await supabase
+        .from('tasks')
+        .insert({
+            name: taskName,
+            note: taskNotes,
+            date: new Date()
+        })
 
-    // adding task to the array
-    const addTask = () => {
-        // console.log(inputValue)
-        updateCounter();
-        setTasksList([...tasksList, {
-            'id': counter,
-            'content': inputValue,
-        }])
-        setInputValue('')
+        
+        //resetting the input fields
+        setTaskName('')
+        setTaskNotes('')
+
         closeModal()
+        navigate(0)
     };
 
     return (
@@ -62,8 +66,12 @@ function AddTask({ tasksList, setTasksList}) {
                 <ModalBody>
                     <input 
                         type="text"
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}/>
+                        value={taskName}
+                        onChange={(e) => setTaskName(e.target.value)}/>
+                    <input 
+                        type="text"
+                        value={taskNotes}
+                        onChange={(e) => setTaskNotes(e.target.value)}/>
                 </ModalBody>
                 <ModalFooter>
                     <Button color="danger" variant="light" onPress={closeModal}>

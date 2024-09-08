@@ -11,7 +11,8 @@ export default {
   theme: {
     colors: {
       'bg-color': '#191919',
-      'card-bg': '#a1a1a196',
+      'card-bg': '#a1a1a12e',
+      'card-bg-hover': '#a1a1a170',
       'text-primary': '#d9d9d9'
     },
     extend: {},

@@ -2,11 +2,23 @@ import { useEffect, useState } from 'react';
 
 import AddTask from "../components/AddTask";
 import TasksList from "../components/TasksList";
+import { supabase } from '../createClient';
 
 function Home() {
     // tasks array
-    const [tasksList, setTasksList] = useState([]);
+    const [tasksList, setTasksList] = useState([]); 
 
+    // Make a request 
+    useEffect(() => {
+        fetchTasks()
+    }, [])
+
+    async function fetchTasks() {
+        const {data} = await supabase
+        .from('tasks')
+        .select('*')
+        setTasksList(data)
+    }
 
     return (
         <>
