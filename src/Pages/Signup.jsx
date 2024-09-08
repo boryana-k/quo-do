@@ -3,20 +3,18 @@ import { useState } from "react";
 import { supabase } from "../createClient";
 
 function Signup() {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const [user, setUser] = useState('');
-      
-
+    
       
     async function signup() {
         const { data } = await supabase.auth.signUp({
             email: email,
             password: password,
         })
+        
 
         setUser(data);
     }
@@ -29,16 +27,7 @@ function Signup() {
             <h3 className="text-2xl">Signup</h3>
 
             <form className="flex flex-col gap-2">
-                <label>
-                    First name
-                </label>
-                <input
-                    type="text"
-                    placeholder="first name"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)} />
-
-                <label></label>
+                
                 <label>
                     Email:
                 </label>
