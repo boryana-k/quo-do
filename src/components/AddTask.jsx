@@ -59,7 +59,9 @@ function AddTask({ tasksList, setTasksList}) {
         <Modal closeButton 
                 isOpen={visible} 
                 onClose={closeModal} 
-                className='dark'>
+                className='dark'
+                placement='top'
+        >
             <ModalContent>
                 
                 <ModalHeader className="flex flex-col gap-1">Add new task...</ModalHeader>
