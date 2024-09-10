@@ -19,7 +19,7 @@ function TasksList({tasksList, fetchTasks, updateDatabase}) {
                     key="all-tasks" 
                     title={
                         <>
-                            All tasks
+                            All
                             ({tasksList.length})
                         </>
                     } 

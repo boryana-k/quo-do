@@ -83,7 +83,7 @@ function AddTask({ fetchTasks, updateDatabase}) {
                     Close
                     </Button>
                     <Button color="primary" variant="light" onPress={addTask}>
-                    Action
+                    Add task
                     </Button>
                 </ModalFooter>
             

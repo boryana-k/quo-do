@@ -33,7 +33,7 @@ function Home() {
     return (
         <>
             <div className="flex items-center justify-between">
-                {/* <h3 className="text-2xl font-anek-kannada font-medium">Today's tasks</h3> */}
+                <h3 className="text-5xl font-anek-kannada font-medium text-secondary">Tasks</h3>
                     <AddTask fetchTasks={fetchTasks} updateDatabase={updateDatabase}/>
             </div>
 
