@@ -12,6 +12,21 @@ function TaskCard({task, updateDatabase}) {
     
     const [editable, setEditable] = useState(false)
 
+    // async function updateTask(task, i, value) {
+    //     const columns = [
+    //         'name', 'note', 'date', 'done', 'archived'
+    //     ]
+
+    //     const { error } = await supabase
+    //     .from('tasks')
+    //     .update({
+    //         // columns[i]: value
+    //     })
+    //     .eq('id', task.id)
+
+    //     console.log(error)
+    // }
+
     // update the task's done status
     async function markTask(data) {
         const { error } = await supabase
@@ -28,7 +43,6 @@ function TaskCard({task, updateDatabase}) {
     async function archiveTask(data) {
         const { error } = await supabase
         .from('tasks')
-        // .delete()
         .update({
             archived: true,
         })
@@ -39,6 +53,7 @@ function TaskCard({task, updateDatabase}) {
 
      // delete the task from the database
      async function deleteTask(data) {
+
         const { error } = await supabase
         .from('tasks')
         .delete()
@@ -46,6 +61,7 @@ function TaskCard({task, updateDatabase}) {
 
         updateDatabase(error)
     }
+
 
     // restore task
     async function restoreTask(data) {
@@ -75,7 +91,6 @@ function TaskCard({task, updateDatabase}) {
       
         return `${day} ${month} ${year}`;
     }
-
 
     async function editTask({task}) {
         setEditable(editable => !editable)
