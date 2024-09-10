@@ -74,7 +74,7 @@ function TaskCard({task, fetchTasks, updateDatabase}) {
                     }
 
                     <div className="text-label-color font-anek-kannada font-thin">
-                        <p className="text-medium">Data created: </p>
+                        <p className="text-medium">Date created: </p>
                         <p className="text-small">{formatDate(task.date)}</p>
                     </div>
                 </div>
