@@ -79,7 +79,7 @@ function TaskCard({task, fetchTasks, updateDatabase}) {
                     </div>
                 </div>
                 <div className="w-full flex items-start my-4 flex-wrap">
-                    <Button color='secondary' startContent={<AiOutlineEdit/>} className="w-1/2 sm:w-1/3" variant='light' onPress={() => markTask(task)}>
+                    <Button color='secondary' startContent={<AiOutlineEdit/>} className="w-1/2 sm:w-1/3" variant='light'>
                         Edit
                     </Button>
 
