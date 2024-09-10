@@ -3,7 +3,7 @@ import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from 
 import { supabase } from '../createClient';
 import { IoIosAdd } from "react-icons/io";
 
-function AddTask({ fetchTasks, updateDatabase}) {
+function AddTask({updateDatabase}) {
 
     //control the modal visibility
     const [visible, setVisible] = useState(false);
@@ -89,42 +89,6 @@ function AddTask({ fetchTasks, updateDatabase}) {
             
             </ModalContent>
         </Modal>
-
-        {/* <Popover 
-        className='dark'
-        placement="bottom">
-            <PopoverTrigger>
-                <Button
-                color="primary" 
-                radius='full'
-                variant="light"
-                isIconOnly
-                className='text-2xl'>
-                    
-                    <img src={addTaskIcon} alt='add task'/>
-                </Button>
-            </PopoverTrigger>
-            <PopoverContent>
-                <div className="py-2.5 flex flex-col gap-2">
-                    <input 
-                        type="text"
-                        value={taskName}
-                        placeholder="task name"
-                        className="py-2 px-4 rounded-xl flex"
-                        onChange={(e) => setTaskName(e.target.value)}/>
-                    <input 
-                        type="text"
-                        value={taskNotes}
-                        placeholder="task note"
-                        className="py-2 px-4 rounded-xl"
-                        onChange={(e) => setTaskNotes(e.target.value)}/>
-
-                    <Button color="primary" variant="light" className='w-full' onPress={addTask}>
-                        Add task
-                    </Button>
-                </div>
-            </PopoverContent>
-        </Popover> */}
         </>
     );
 };  

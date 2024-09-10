@@ -3,12 +3,12 @@ import TaskCard from "./TaskCard";
 import {Tabs, Tab} from "@nextui-org/tabs";
 
 
-function TasksList({tasksList, fetchTasks, updateDatabase}) {
+function TasksList({tasksList, updateDatabase}) {
 
-    const doneTasks = tasksList.filter(task => task.done);
-    const notDone = tasksList.filter(task => !task.done)
-
-    console.log(notDone)
+    const all = tasksList.filter(task => !task.archived)
+    const doneTasks = all.filter(task => task.done);
+    const notDone = all.filter(task => !task.done)
+    const archived = tasksList.filter(task => task.archived)
 
     return (
         <div className="flex flex-col items-start gap-4 my-4">
@@ -20,13 +20,13 @@ function TasksList({tasksList, fetchTasks, updateDatabase}) {
                     title={
                         <>
                             All
-                            ({tasksList.length})
+                            ({all.length})
                         </>
                     } 
                     className="w-full"
                 >
-                    { tasksList && tasksList.map(task => (
-                        <TaskCard key={task.id} task={task} fetchTasks={fetchTasks} updateDatabase={updateDatabase}></TaskCard>
+                    { all && all.map(task => (
+                        <TaskCard key={task.id} task={task} updateDatabase={updateDatabase}></TaskCard>
                     ))}
                 </Tab>
 
@@ -41,7 +41,7 @@ function TasksList({tasksList, fetchTasks, updateDatabase}) {
                     className="w-full"
                     >
                     { doneTasks && doneTasks.map(task => (
-                        <TaskCard key={task.id} task={task} fetchTasks={fetchTasks} updateDatabase={updateDatabase}></TaskCard>
+                        <TaskCard key={task.id} task={task} updateDatabase={updateDatabase}></TaskCard>
                     ))}
                 </Tab>
 
@@ -55,7 +55,21 @@ function TasksList({tasksList, fetchTasks, updateDatabase}) {
                     className="w-full"
                     >
                     { notDone && notDone.map(task => (
-                        <TaskCard key={task.id} task={task} fetchTasks={fetchTasks} updateDatabase={updateDatabase}></TaskCard>
+                        <TaskCard key={task.id} task={task} updateDatabase={updateDatabase}></TaskCard>
+                    ))}
+                </Tab>
+
+                <Tab key="archived" 
+                    title={
+                        <>
+                            Archived
+                            ({archived.length})
+                        </>
+                    }
+                    className="w-full"
+                    >
+                    { archived && archived.map(task => (
+                        <TaskCard key={task.id} task={task} updateDatabase={updateDatabase}></TaskCard>
                     ))}
                 </Tab>
                 

@@ -21,6 +21,7 @@ function Home() {
         setTasksList(data)
     }
 
+    // check for errors before fetching the data after update
     function updateDatabase(error) {
         if (error) {
             console.error('Error updating the database', error);
@@ -39,7 +40,7 @@ function Home() {
 
             { tasksList.length === 0 ? <ListLabel tasksList={tasksList}/> : ''}
             
-            <TasksList tasksList={tasksList} fetchTasks={fetchTasks} updateDatabase={updateDatabase}/>
+            <TasksList tasksList={tasksList} updateDatabase={updateDatabase}/>
             
             
         </>
