@@ -21,15 +21,25 @@ function Home() {
         setTasksList(data)
     }
 
+    function updateDatabase(error) {
+        if (error) {
+            console.error('Error updating the database', error);
+        } else {
+        // Fetch the updated tasks after updating
+        fetchTasks();
+        }
+    }
+
     return (
         <>
             <div className="flex items-center justify-between">
-                <h3 className="text-2xl">Today's tasks</h3>
-                    <AddTask tasksList={tasksList} setTasksList={setTasksList}/>
+                {/* <h3 className="text-2xl font-anek-kannada font-medium">Today's tasks</h3> */}
+                    <AddTask fetchTasks={fetchTasks} updateDatabase={updateDatabase}/>
             </div>
 
-            <ListLabel tasksList={tasksList}/>
-            <TasksList tasksList={tasksList} refreshTasksList={fetchTasks}/>
+            { tasksList.length === 0 ? <ListLabel tasksList={tasksList}/> : ''}
+            
+            <TasksList tasksList={tasksList} fetchTasks={fetchTasks} updateDatabase={updateDatabase}/>
             
             
         </>

@@ -1,11 +1,9 @@
-import { useEffect, useState } from 'react';
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, ButtonGroup} from "@nextui-org/react";
-import addTaskIcon from '../icons/add-button.svg'
+import { useState } from 'react';
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@nextui-org/react";
 import { supabase } from '../createClient';
-import { useNavigate } from "react-router-dom";
+import { IoIosAdd } from "react-icons/io";
 
-function AddTask({ tasksList, setTasksList}) {
-    const navigate = useNavigate();
+function AddTask({ fetchTasks, updateDatabase}) {
 
     //control the modal visibility
     const [visible, setVisible] = useState(false);
@@ -40,20 +38,21 @@ function AddTask({ tasksList, setTasksList}) {
         setTaskNotes('')
 
         closeModal()
-        navigate(0)
+        updateDatabase();
     };
 
     return (
         <>
+        
         <Button 
             onClick={openModal}
             color="primary" 
             radius='full'
-            variant="flat"
+            variant="light"
             isIconOnly
             className='text-2xl'
         >
-            <img src={addTaskIcon} alt='add task'/>
+            <IoIosAdd />
         </Button>
 
         <Modal closeButton 
@@ -83,13 +82,49 @@ function AddTask({ tasksList, setTasksList}) {
                     <Button color="danger" variant="light" onPress={closeModal}>
                     Close
                     </Button>
-                    <Button color="primary" onPress={addTask}>
+                    <Button color="primary" variant="light" onPress={addTask}>
                     Action
                     </Button>
                 </ModalFooter>
             
             </ModalContent>
         </Modal>
+
+        {/* <Popover 
+        className='dark'
+        placement="bottom">
+            <PopoverTrigger>
+                <Button
+                color="primary" 
+                radius='full'
+                variant="light"
+                isIconOnly
+                className='text-2xl'>
+                    
+                    <img src={addTaskIcon} alt='add task'/>
+                </Button>
+            </PopoverTrigger>
+            <PopoverContent>
+                <div className="py-2.5 flex flex-col gap-2">
+                    <input 
+                        type="text"
+                        value={taskName}
+                        placeholder="task name"
+                        className="py-2 px-4 rounded-xl flex"
+                        onChange={(e) => setTaskName(e.target.value)}/>
+                    <input 
+                        type="text"
+                        value={taskNotes}
+                        placeholder="task note"
+                        className="py-2 px-4 rounded-xl"
+                        onChange={(e) => setTaskNotes(e.target.value)}/>
+
+                    <Button color="primary" variant="light" className='w-full' onPress={addTask}>
+                        Add task
+                    </Button>
+                </div>
+            </PopoverContent>
+        </Popover> */}
         </>
     );
 };  
