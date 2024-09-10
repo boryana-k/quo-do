@@ -29,7 +29,7 @@ function Home() {
             </div>
 
             <ListLabel tasksList={tasksList}/>
-            <TasksList tasksList={tasksList} />
+            <TasksList tasksList={tasksList} refreshTasksList={fetchTasks}/>
             
             
         </>

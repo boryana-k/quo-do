@@ -1,17 +1,9 @@
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import { supabase } from "../createClient";
-import { useNavigate } from "react-router-dom";
-import { mark, nav } from "framer-motion/client";
 
-function TaskCard({task}) {
-    const [updatedTask, setUpdatedTask] = useState(task)
+function TaskCard({task, refreshTasks}) {
     const [visible, setVisible] = useState(false);
-    const [isMarked, setIsMarked] = useState(task.done);
-
-    const navigate = useNavigate();
-
-    // console.log(updatedTask)
     
     function openModal() {
         setVisible(true)
@@ -21,52 +13,25 @@ function TaskCard({task}) {
         setVisible(false)
     }
 
-    
-    
-    function handleClick() {
-        setIsMarked((isMarked) => !isMarked)
-    }
+    // function to update the tasks done status
+    async function markTask(data) {
 
-    useEffect(() => {
-        if(isMarked !== null) {
-            markAsDone();
-            // updateTask();
-        }
-
-    }, [markAsDone])
-    
-    async function markAsDone() {
-        // console.log(isMarked)
         const { error } = await supabase
         .from('tasks')
         .update({
-            done: isMarked
+            done: !data.done
         })
-        .eq('id', task.id)
-        .select()
-        // console.log(`task marked after click: ${isMarked}`)
+        .eq('id', data.id)
 
-        const { data } = await supabase
-        .from('tasks')
-        .select()
-        .eq('id', task.id)
-
-        setUpdatedTask(data)
-
-        // console.log(data)
+        if (error) {
+            console.error('Error toggling state:', error);
+        } else {
+        // Fetch the updated data after toggling
+            refreshTasks();
+        }
     }
 
-    // async function updateTask() {
-    //     const { data } = await supabase
-    //     .from('tasks')
-    //     .select()
-    //     .eq('id', task.id)
-
-    //     setUpdatedTask(data)
-
-    //     // console.log(data)
-    // }
-
+    
 
 
     return(
@@ -88,27 +53,27 @@ function TaskCard({task}) {
         >
             <ModalContent>
                 <ModalHeader>
-                    {task.name}
+                    <p className={
+                        task.done 
+                        ? 'line-through'
+                        : ''
+                    }>{task.name}</p>
                 </ModalHeader>
                 <ModalBody>
                     {task.note}
                 </ModalBody>
                 <ModalFooter>
-                        
-                    { 
-                        updatedTask.done 
-                        ? <Button color="danger" variant="light">
-                            Unmark as done
-                        </Button>
-                        : <Button color="primary" onPress={() => handleClick(task.id)}>
-                        Mark as done
-                        </Button>
-                    }
+                    <Button color={task.done ? 'danger' : 'primary'} variant={task.done ? 'light' : ''} onPress={() => markTask(task)}>
+                        {
+                            task.done 
+                            ? 'Unmark as done'
+                            : 'Mark as done'
+                        }
+                    </Button>
 
-                        <Button color="danger" variant="light" >
-                            Delete task
-                        </Button>
-                    
+                    <Button color="danger" variant="light" >
+                        Delete task
+                    </Button>
                 </ModalFooter>
             </ModalContent>
 
