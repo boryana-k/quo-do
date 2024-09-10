@@ -78,12 +78,12 @@ function TaskCard({task, fetchTasks, updateDatabase}) {
                         <p className="text-small">{formatDate(task.date)}</p>
                     </div>
                 </div>
-                <div className="w-full flex my-4">
-                    <Button color='secondary' startContent={<AiOutlineEdit/>} className="w-1/2" variant='light' onPress={() => markTask(task)}>
+                <div className="w-full flex items-start my-4 flex-wrap">
+                    <Button color='secondary' startContent={<AiOutlineEdit/>} className="w-1/2 sm:w-1/3" variant='light' onPress={() => markTask(task)}>
                         Edit
                     </Button>
 
-                    <Button color={task.done ? 'danger' : 'primary'} startContent={task.done ? '' : <IoMdCheckmarkCircleOutline />} className="w-1/2" variant='light' onPress={() => markTask(task)}>
+                    <Button color={task.done ? 'danger' : 'primary'} startContent={task.done ? '' : <IoMdCheckmarkCircleOutline />} className="w-1/2 sm:w-1/3" variant='light' onPress={() => markTask(task)}>
                         {
                             task.done 
                             ? 'Unmark as done'
@@ -91,7 +91,7 @@ function TaskCard({task, fetchTasks, updateDatabase}) {
                         }
                     </Button>
 
-                    <Button color="danger" variant="light" startContent={<GoTrash />} className="w-1/2" onPress={() => deleteTask(task)}>
+                    <Button color="danger" variant="light" startContent={<GoTrash />} className="w-full sm:w-1/3" onPress={() => deleteTask(task)}>
                         Delete task
                     </Button>
                 </div>
