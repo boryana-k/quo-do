@@ -4,7 +4,7 @@ import { supabase } from "../createClient";
 import {Button, Accordion, AccordionItem} from "@nextui-org/react";
 import { GoTrash, GoTasklist } from "react-icons/go";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
-
+import { AiOutlineEdit } from "react-icons/ai";
 
 function TaskCard({task, fetchTasks, updateDatabase}) {
     const [visible, setVisible] = useState(false);
@@ -79,6 +79,10 @@ function TaskCard({task, fetchTasks, updateDatabase}) {
                     </div>
                 </div>
                 <div className="w-full flex my-4">
+                    <Button color='secondary' startContent={<AiOutlineEdit/>} className="w-1/2" variant='light' onPress={() => markTask(task)}>
+                        Edit
+                    </Button>
+
                     <Button color={task.done ? 'danger' : 'primary'} startContent={task.done ? '' : <IoMdCheckmarkCircleOutline />} className="w-1/2" variant='light' onPress={() => markTask(task)}>
                         {
                             task.done 
