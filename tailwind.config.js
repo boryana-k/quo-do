@@ -10,7 +10,7 @@ export default {
   ],
   theme: {
     colors: {
-      'bg-color': '#151515',
+      'bg-color': '#191919',
       'text-primary': '#d9d9d9',
       'text-secondary': '#FBD1A2',
       'secondary-hover': '#fbd1a2c2',
