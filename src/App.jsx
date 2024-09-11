@@ -1,5 +1,5 @@
 import './App.css'
-import { Routes, Route, useNavigate, Navigate, Link } from 'react-router-dom';
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import Home from './Pages/Home';
 import {NextUIProvider} from "@nextui-org/react";
 import { supabase } from './createClient.js'
@@ -25,10 +25,10 @@ function App() {
   return (
     <NextUIProvider>
       <Routes>
-        <Route path="/" exact element={token ? <Link to="/dashboard"/> : <SignUp />}></Route>
-        <Route path="/login" exact element={token ? <Link to="/dashboard"/> : <Login setToken={setToken}/>}></Route>
-        <Route path="/signup" exact element={token ? <Link to="/dashboard"/> : <SignUp />}></Route>
-        <Route path="/dashboard" exact element={token ? <Home token={token}/> : <Link to="/login"/>}></Route>
+        <Route path="/" exact element={token ? <Navigate to="/dashboard"/> : <SignUp />}></Route>
+        <Route path="/login" exact element={token ? <Navigate to="/dashboard"/> : <Login setToken={setToken}/>}></Route>
+        <Route path="/signup" exact element={token ? <Navigate to="/dashboard"/> : <SignUp />}></Route>
+        <Route path="/dashboard" exact element={token ? <Home token={token}/> : <Navigate to="/login"/>}></Route>
       </Routes>
 
     </NextUIProvider>
