@@ -5,11 +5,14 @@ import TasksList from "../components/TasksList";
 import ListLabel from '../components/ListLabel';
 import { supabase } from '../createClient';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@nextui-org/react';
 
 function Home({token}) {
+    const navigate = useNavigate()
+
     // tasks array
     const [tasksList, setTasksList] = useState([]); 
-
+    const userFirstName = token.user?.user_metadata?.first_name
     // Make a request 
     useEffect(() => {
         fetchTasks()
@@ -33,12 +36,26 @@ function Home({token}) {
         }
     }
 
-    console.log(token.user.id)
+    async function signOut() {
+        const { error } = await supabase.auth.signOut();
+
+        if (error) {
+            console.error("Error signing out:", error);
+        } else {
+            console.log("User signed out successfully");
+            // Tokens are removed and user session is cleared
+        }
+
+        sessionStorage.removeItem('token')
+        navigate(0)
+    }
+      
+    
 
     return (
         <>
             <div className="flex items-center justify-between">
-                <h3 className="text-xl font-anek-kannada font-medium text-secondary">Tasks</h3>
+                <h3 className="text-xl font-anek-kannada font-medium text-secondary">Hello, {userFirstName}</h3>
                     <AddTask token={token} fetchTasks={fetchTasks} updateDatabase={updateDatabase}/>
             </div>
 
@@ -46,7 +63,9 @@ function Home({token}) {
             
             <TasksList tasksList={tasksList} updateDatabase={updateDatabase}/>
             
-            
+            <Button color="primary" variant="light" onPress={signOut}>
+                Sign out
+            </Button>
         </>
     );
 };

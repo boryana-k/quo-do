@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { supabase } from './../createClient';
-import { Button } from '@nextui-org/react';
+import { Button, Input } from '@nextui-org/react';
 
 function SignUp() {
     const [name, setName] = useState('')
@@ -36,37 +36,33 @@ function SignUp() {
       <div>
         <h2>Sign Up</h2>
 
-        <form className='flex flex-col gap-4 items-center'>
-            <label>
-                Name:
-            </label>
-            <input 
+        <form className='flex flex-col gap-4 items-center w-1/2 mx-auto'>
+            <Input 
+                label="Name"
                 type="text"
+                isRequired
                 value={name}
-                placeholder="name"
-                className="py-2 px-4 rounded-xl w-1/2"
+                variant='underlined'
+                className="py-2 px-4 rounded-xl"
                 onChange={(e) => setName(e.target.value)}/>
-            <label>
-                Email:
-            </label>
-            <input 
+                
+            <Input 
+                label="Email"
                 type="email"
                 value={email}
-                placeholder="email"
-                className="py-2 px-4 rounded-xl w-1/2"
+                variant='underlined'
+                className="py-2 px-4 rounded-xl"
                 onChange={(e) => setEmail(e.target.value)}/>
 
-            <label>
-                pass:
-            </label>
-            <input 
-                type="email"
+            <Input 
+                label="Password"
+                type="password"
                 value={password}
-                placeholder="password"
-                className="py-2 px-4 rounded-xl w-1/2"
+                variant='underlined'
+                className="py-2 px-4 rounded-xl"
                 onChange={(e) => setPassword(e.target.value)}/>
 
-            <Button color="primary" variant="light" onPress={handleSignUp}>
+            <Button color="primary" variant="light" className="" onPress={handleSignUp}>
                 sign up
             </Button>
         </form>
