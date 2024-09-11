@@ -3,7 +3,7 @@ import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from 
 import { supabase } from '../createClient';
 import { IoIosAdd } from "react-icons/io";
 
-function AddTask({updateDatabase}) {
+function AddTask({updateDatabase, token}) {
 
     //control the modal visibility
     const [visible, setVisible] = useState(false);
@@ -29,7 +29,10 @@ function AddTask({updateDatabase}) {
         .insert({
             name: taskName,
             note: taskNotes,
-            date: new Date()
+            date: new Date(),
+            done: false,
+            archived: false,
+            creator_id: token.user.id
         })
 
         

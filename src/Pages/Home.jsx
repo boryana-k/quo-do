@@ -4,8 +4,9 @@ import AddTask from "../components/AddTask";
 import TasksList from "../components/TasksList";
 import ListLabel from '../components/ListLabel';
 import { supabase } from '../createClient';
+import { useNavigate } from 'react-router-dom';
 
-function Home() {
+function Home({token}) {
     // tasks array
     const [tasksList, setTasksList] = useState([]); 
 
@@ -18,6 +19,7 @@ function Home() {
         const {data} = await supabase
         .from('tasks')
         .select('*')
+        .eq('creator_id', token.user.id)
         setTasksList(data)
     }
 
@@ -31,11 +33,13 @@ function Home() {
         }
     }
 
+    console.log(token.user.id)
+
     return (
         <>
             <div className="flex items-center justify-between">
                 <h3 className="text-xl font-anek-kannada font-medium text-secondary">Tasks</h3>
-                    <AddTask fetchTasks={fetchTasks} updateDatabase={updateDatabase}/>
+                    <AddTask token={token} fetchTasks={fetchTasks} updateDatabase={updateDatabase}/>
             </div>
 
             { tasksList.length === 0 ? <ListLabel tasksList={tasksList}/> : ''}
