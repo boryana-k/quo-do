@@ -79,11 +79,11 @@ function Login({setToken}) {
 
       </form>
       
-      <div className='flex flex-col gap-1 w-1/2 mx-auto items-center justify-center'>
-        <p>Don't have an account? </p>
-        <Link to='/signup' className='text-text-secondary'>
-            Sign Up
-        </Link> 
+        <div className='flex flex-col gap-1 w-1/2 mx-auto items-center justify-center'>
+            <p>Don't have an account? </p>
+            <Link to='/signup' className='text-text-secondary'>
+                Sign Up
+            </Link> 
         </div>
     </div>
   )

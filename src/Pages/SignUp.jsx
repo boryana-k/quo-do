@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { supabase } from './../createClient';
 import { Button, Input } from '@nextui-org/react';
+import { Link } from 'react-router-dom';
 
 function SignUp() {
     const [name, setName] = useState('')
@@ -62,9 +63,16 @@ function SignUp() {
                 className="py-2 px-4 rounded-xl"
                 onChange={(e) => setPassword(e.target.value)}/>
 
-            <Button color="primary" variant="light" className="" onPress={handleSignUp}>
+            <Button color="primary" variant="light" className="w-full" onPress={handleSignUp}>
                 sign up
             </Button>
+
+            <div className='flex flex-col gap-1 w-1/2 mx-auto items-center justify-center'>
+                <p>Already have an account? </p>
+                <Link to='/login' className='text-text-secondary'>
+                    login
+                </Link> 
+            </div>
         </form>
       </div>
     );
