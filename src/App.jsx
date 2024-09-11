@@ -4,7 +4,7 @@ import Home from './Pages/Home';
 import {NextUIProvider} from "@nextui-org/react";
 import { supabase } from './createClient.js'
 import Login from './Pages/Login';
-import SignUp from './Pages/Signup.jsx';
+import SignUp from './Pages/SignUp.jsx';
 import { useEffect, useState } from 'react';
 
 function App() {
