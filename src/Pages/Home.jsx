@@ -10,6 +10,8 @@ import { Button } from '@nextui-org/react';
 function Home({token}) {
     const navigate = useNavigate()
 
+    const [redirect, setRedirect] = useState(false);
+
     // tasks array
     const [tasksList, setTasksList] = useState([]); 
     const userFirstName = token.user?.user_metadata?.first_name
@@ -44,10 +46,14 @@ function Home({token}) {
         } else {
             console.log("User signed out successfully");
             // Tokens are removed and user session is cleared
+            setRedirect(true)
         }
 
         sessionStorage.removeItem('token')
-        navigate(0)
+    }
+
+    if(redirect) {
+        return <Navigate to="/login" />;
     }
       
     
