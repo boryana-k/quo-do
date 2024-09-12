@@ -24,11 +24,20 @@ function App() {
   
   return (
     <NextUIProvider>
+       <>
+        {
+          token 
+          ? <Navigate to="/dashboard"/>
+          : <Navigate to="/login"/>
+        }
+        </>
       <Routes>
-        <Route path="/" exact element={token ? <Navigate to="/dashboard"/> : <SignUp />}></Route>
-        <Route path="/login" exact element={token ? <Navigate to="/dashboard"/> : <Login setToken={setToken}/>}></Route>
-        <Route path="/signup" exact element={token ? <Navigate to="/dashboard"/> : <SignUp />}></Route>
-        <Route path="/dashboard" exact element={token ? <Home token={token}/> : <Navigate to="/login"/>}></Route>
+       
+
+        <Route path="/" exact element={<SignUp />}></Route>
+        <Route path="/login" exact element={<Login setToken={setToken}/>}></Route>
+        <Route path="/signup" exact element={ <SignUp />}></Route>
+        <Route path="/dashboard" exact element={token ? <Home token={token}/> : ''}></Route>
       </Routes>
 
     </NextUIProvider>

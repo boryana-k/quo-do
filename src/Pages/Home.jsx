@@ -10,7 +10,6 @@ import { Button } from '@nextui-org/react';
 function Home({token}) {
     const navigate = useNavigate()
 
-    const [redirect, setRedirect] = useState(false);
 
     // tasks array
     const [tasksList, setTasksList] = useState([]); 
@@ -45,19 +44,14 @@ function Home({token}) {
             console.error("Error signing out:", error);
         } else {
             console.log("User signed out successfully");
-            // Tokens are removed and user session is cleared
-            setRedirect(true)
         }
 
         sessionStorage.removeItem('token')
-    }
-
-    if(redirect) {
-        return <Navigate to="/login" />;
+        navigate(0)
+        return <Navigate to="/login" />
     }
       
     
-
     return (
         <>
             <div className="flex items-center justify-between">
