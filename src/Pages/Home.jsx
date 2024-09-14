@@ -7,13 +7,10 @@ import { supabase } from '../createClient';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Button } from '@nextui-org/react';
 
-function Home({token}) {
-    const navigate = useNavigate()
-
-
+function Home() {
     // tasks array
     const [tasksList, setTasksList] = useState([]); 
-    const userFirstName = token.user?.user_metadata?.first_name
+
     // Make a request 
     useEffect(() => {
         fetchTasks()
@@ -23,7 +20,6 @@ function Home({token}) {
         const {data} = await supabase
         .from('tasks')
         .select('*')
-        .eq('creator_id', token.user.id)
         setTasksList(data)
     }
 
@@ -36,36 +32,17 @@ function Home({token}) {
         fetchTasks();
         }
     }
-
-    async function signOut() {
-        const { error } = await supabase.auth.signOut();
-
-        if (error) {
-            console.error("Error signing out:", error);
-        } else {
-            console.log("User signed out successfully");
-        }
-
-        sessionStorage.removeItem('token')
-        navigate(0)
-        return <Navigate to="/login" />
-    }
-      
     
     return (
         <>
             <div className="flex items-center justify-between">
-                <h3 className="text-xl font-anek-kannada font-medium text-secondary">Hello, {userFirstName}</h3>
-                    <AddTask token={token} fetchTasks={fetchTasks} updateDatabase={updateDatabase}/>
+                <h3 className="text-xl font-anek-kannada font-medium text-secondary">Hello</h3>
+                    <AddTask fetchTasks={fetchTasks} updateDatabase={updateDatabase}/>
             </div>
 
             { tasksList.length === 0 ? <ListLabel tasksList={tasksList}/> : ''}
             
             <TasksList tasksList={tasksList} updateDatabase={updateDatabase}/>
-            
-            <Button color="primary" variant="light" onPress={signOut}>
-                Sign out
-            </Button>
         </>
     );
 };

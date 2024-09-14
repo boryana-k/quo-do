@@ -31,8 +31,7 @@ function AddTask({updateDatabase, token}) {
             note: taskNotes,
             date: new Date(),
             done: false,
-            archived: false,
-            creator_id: token.user.id
+            archived: false
         })
 
         
