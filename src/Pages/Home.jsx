@@ -20,6 +20,7 @@ function Home() {
         const {data} = await supabase
         .from('tasks')
         .select('*')
+        
         setTasksList(data)
     }
 
