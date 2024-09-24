@@ -4,8 +4,6 @@ import AddTask from "../components/AddTask";
 import TasksList from "../components/TasksList";
 import ListLabel from '../components/ListLabel';
 import { supabase } from '../createClient';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { Button } from '@nextui-org/react';
 
 function Home() {
     // tasks array
@@ -23,6 +21,7 @@ function Home() {
         
         setTasksList(data)
     }
+
 
     // check for errors before fetching the data after update
     function updateDatabase(error) {
