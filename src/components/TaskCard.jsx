@@ -11,21 +11,7 @@ import { MdRestore } from "react-icons/md";
 function TaskCard({task, updateDatabase}) {
     
     const [editable, setEditable] = useState(false)
-
-    // async function updateTask(task, i, value) {
-    //     const columns = [
-    //         'name', 'note', 'date', 'done', 'archived'
-    //     ]
-
-    //     const { error } = await supabase
-    //     .from('tasks')
-    //     .update({
-    //         // columns[i]: value
-    //     })
-    //     .eq('id', task.id)
-
-    //     console.log(error)
-    // }
+    const [markedAsDone, setMarkedAsDone] = useState(false)
 
     // update the task's done status
     async function markTask(data) {
@@ -37,6 +23,7 @@ function TaskCard({task, updateDatabase}) {
         .eq('id', data.id)
 
         updateDatabase(error)
+        setMarkedAsDone(!markedAsDone)
     }
 
     // archive the task 
@@ -103,7 +90,7 @@ function TaskCard({task, updateDatabase}) {
                     key={task.id} 
                     aria-label={'task' + task.id} 
                     startContent={<GoTasklist className="text-secondary" />}
-                    title={task.name} className="bg-bg-color"
+                    title={task.name} className="bg-bg-color" 
                 >
                     <div className="w-full flex flex-col items-start text-start gap-4">
                         {
