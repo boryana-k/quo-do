@@ -3,33 +3,43 @@ import { useEffect, useState } from 'react';
 import AddTask from "../components/AddTask";
 import TasksList from "../components/TasksList";
 import ListLabel from '../components/ListLabel';
-import { supabase } from '../createClient';
+// import { supabase } from '../createClient';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebase';
 
 function Home() {
     // tasks array
     const [tasksList, setTasksList] = useState([]); 
 
-    // Make a request 
     useEffect(() => {
         fetchTasks()
     }, [])
 
     async function fetchTasks() {
-        const {data} = await supabase
-        .from('tasks')
-        .select('*')
-        
-        setTasksList(data)
+        try {
+            // Get all documents from 'tasks' collection
+            const tasksCollection = collection(db, 'tasks');
+            const querySnapshot = await getDocs(tasksCollection);
+            
+            // Convert to array of objects with id included
+            const data = querySnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+            
+            setTasksList(data);
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
+        }
     }
-
 
     // check for errors before fetching the data after update
     function updateDatabase(error) {
         if (error) {
             console.error('Error updating the database', error);
         } else {
-        // Fetch the updated tasks after updating
-        fetchTasks();
+            // Fetch the updated tasks after updating
+            fetchTasks();
         }
     }
     
@@ -40,9 +50,9 @@ function Home() {
                     <AddTask fetchTasks={fetchTasks} updateDatabase={updateDatabase}/>
             </div>
 
-            { tasksList.length === 0 ? <ListLabel tasksList={tasksList}/> : ''}
+            { tasksList.length === 0 ? <ListLabel tasksList={tasksList}/> : ''} 
             
-            <TasksList tasksList={tasksList} updateDatabase={updateDatabase}/>
+            <TasksList tasksList={tasksList} updateDatabase={updateDatabase}/> 
         </>
     );
 };

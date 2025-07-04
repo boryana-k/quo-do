@@ -1,88 +1,123 @@
-// import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react";
 import React, { useState } from "react";
-import { supabase } from "../createClient";
-import {Button, Accordion, AccordionItem} from "@nextui-org/react";
+import { formatDate } from '../utils/utils';
+import {Button, Accordion, AccordionItem, Modal, ModalContent, ModalBody, ModalFooter, ModalHeader} from "@nextui-org/react";
 import { GoTrash, GoTasklist } from "react-icons/go";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdRestore } from "react-icons/md";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { db } from "../firebase";
+import { create } from "framer-motion/client";
 
 
 function TaskCard({task, updateDatabase}) {
     
-    const [editable, setEditable] = useState(false)
-    const [markedAsDone, setMarkedAsDone] = useState(false)
+    // console.log(task)
 
-    // update the task's done status
-    async function markTask(data) {
-        const { error } = await supabase
-        .from('tasks')
-        .update({
-            done: !data.done
-        })
-        .eq('id', data.id)
+    // Convert Firestore Timestamp to JavaScript Date
+    const createdAt = task.createdAt.toDate();
+    // Format the date (e.g., "dd-mm-yyyy")
+    const formattedDate = formatDate(createdAt);
 
-        updateDatabase(error)
-        setMarkedAsDone(!markedAsDone)
+    // task details
+    const [taskName, setTaskName ] = useState(task.name);
+    const [taskNotes, setTaskNotes] = useState(task.notes);
+
+    const [isEditable, setisEditable] = useState(false)
+    const [isMarketAsDone, setisMarketAsDone] = useState(false)
+
+    const [visible, setVisible] = useState(false);
+
+    async function markTask(task) {
+        try {
+            await updateDoc(doc(db, 'tasks', task.id), {
+                done: !task.done
+            });
+
+            updateDatabase();
+            setisMarketAsDone(!isMarketAsDone);
+        } catch (error) {
+            console.error('Error updating task:', error);
+        }
     }
 
-    // archive the task 
-    async function archiveTask(data) {
-        const { error } = await supabase
-        .from('tasks')
-        .update({
-            archived: true,
-        })
-        .eq('id', data.id)
+    async function archiveTask(task) {
+        try {
+            await updateDoc(doc(db, 'tasks', task.id), {
+                archived: !task.archived
+            });
 
-        updateDatabase(error)
+            updateDatabase();
+        } catch (error) {
+            console.error('Error archiving task:', error);
+        }
     }
-
      // delete the task from the database
      async function deleteTask(data) {
 
-        const { error } = await supabase
-        .from('tasks')
-        .delete()
-        .eq('id', data.id)
-
-        updateDatabase(error)
-    }
-
-
-    // restore task
-    async function restoreTask(data) {
-        const { error } = await supabase
-        .from('tasks')
+        // const { error } = await supabase
+        // .from('tasks')
         // .delete()
-        .update({
-            archived: false,
-        })
-        .eq('id', data.id)
+        // .eq('id', data.id)
 
-        updateDatabase(error)
+        // updateDatabase(error)
+
+        try {
+            
+            await deleteDoc(doc(db, 'tasks', task.id))
+            updateDatabase()
+        } catch(error) {
+            console.log('Error deleting task:', error)
+        }
     }
 
-    // format the date
-    function formatDate(task_date) {
-        const date = new Date(task_date.toString())
-      
-        const year = date.getFullYear();
-        const monthNames = [
-            'January', 'February', 'March', 'April', 'May', 'June', 'July',
-            'August', 'September', 'October', 'November', 'December'
-          ];
+    async function restoreTask(task) {
+        try {
+            await updateDoc(doc(db, 'tasks', task.id), {
+                archived: false
+            });
 
-        const month = monthNames[date.getMonth()];
-        const day = String(date.getDate()).padStart(2, '0');
-      
-        return `${day} ${month} ${year}`;
+            updateDatabase();
+        } catch (error) {
+            console.error('Error restoring task:', error);
+        }
     }
 
-    async function editTask({task}) {
-        setEditable(editable => !editable)
+    async function editTask() {
+        setisEditable(isEditable => !isEditable)
     }
 
+
+    async function updateTask(name, notes) {
+        try {
+            await updateDoc(doc(db, 'tasks', task.id), {
+                name: taskName,
+                notes: taskNotes,
+                createdAt: new Date() 
+            });
+
+            // Reset the input fields
+            setTaskName('');
+            setTaskNotes('');
+
+            closeModal();
+            updateDatabase();
+            
+            console.log('Task updated');
+        } catch (error) {
+            console.error('Error updating task:', error);
+        }
+    }
+
+    // function to open the modal
+    function openModal() {
+        setVisible(true);
+    };
+
+    // close modal
+    function closeModal() {
+        setVisible(false);
+    };
     return(
         <div className="w-full border-t-[0.5px] border-border-color py-4">
             <Accordion className='dark' variant="splitted">
@@ -103,13 +138,13 @@ function TaskCard({task, updateDatabase}) {
 
                         <div className="text-label-color font-anek-kannada font-thin">
                             <p className="text-medium">Date created: </p>
-                            <p className="text-small">{formatDate(task.date)}</p>
+                            <p className="text-small">{formattedDate}</p>
                         </div>
                     </div>
                     <div className="w-full flex items-start my-4 flex-wrap">
                         {
                             !task.archived && 
-                                <Button color='secondary' startContent={<AiOutlineEdit/>} className="w-1/2 sm:w-1/3" variant='light'>
+                                <Button color='secondary' startContent={<AiOutlineEdit/>} className="w-1/2 sm:w-1/3" variant='light' onPress={openModal}>
                                     Edit
                                 </Button>
                         }
@@ -144,6 +179,41 @@ function TaskCard({task, updateDatabase}) {
                     </div>
                 </AccordionItem>
             </Accordion>
+
+            <Modal closeButton 
+                    isOpen={visible} 
+                    onClose={closeModal} 
+                    className='dark'
+                    placement='top'
+            >
+                <ModalContent>
+                    
+                    <ModalHeader className="flex flex-col gap-1">Edit the task...</ModalHeader>
+                    <ModalBody>
+                        <input 
+                            type="text"
+                            value={taskName}
+                            placeholder=''
+                            className="py-2 px-4 rounded-xl"
+                            onChange={(e) => setTaskName(e.target.value)}/>
+                        <input 
+                            type="text"
+                            value={taskNotes}
+                            placeholder=''
+                            className="py-2 px-4 rounded-xl"
+                            onChange={(e) => setTaskNotes(e.target.value)}/>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="danger" variant="light" onPress={closeModal}>
+                        Close
+                        </Button>
+                        <Button color="primary" variant="light" onPress={updateTask}>
+                        Add task
+                        </Button>
+                    </ModalFooter>
+                
+                </ModalContent>
+            </Modal>
         </div>
     );
 };

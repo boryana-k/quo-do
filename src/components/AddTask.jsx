@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@nextui-org/react";
-import { supabase } from '../createClient';
+// import { supabase } from '../createClient';
 import { IoIosAdd } from "react-icons/io";
+import { addDoc, collection, setDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 function AddTask({updateDatabase, token}) {
 
@@ -23,25 +25,49 @@ function AddTask({updateDatabase, token}) {
     const [taskNotes, setTaskNotes] = useState('');
 
     // adding task
-    async function addTask() {
-        const { data } = await supabase
-        .from('tasks')
-        .insert({
-            name: taskName,
-            note: taskNotes,
-            date: new Date(),
-            done: false,
-            archived: false
-        })
+    // async function addTask() {
+    //     const { data } = await supabase
+    //     .from('tasks')
+    //     .insert({
+    //         name: taskName,
+    //         note: taskNotes,
+    //         date: new Date(),
+    //         done: false,
+    //         archived: false
+    //     })
 
         
-        //resetting the input fields
-        setTaskName('')
-        setTaskNotes('')
+    //     //resetting the input fields
+    //     setTaskName('')
+    //     setTaskNotes('')
 
-        closeModal()
-        updateDatabase();
-    };
+    //     closeModal()
+    //     updateDatabase();
+    // };
+
+    async function addTask() {
+        try {
+            // Add document to 'tasks' collection
+            const docRef = await addDoc(collection(db, 'tasks'), {
+                name: taskName,
+                notes: taskNotes,
+                createdAt: new Date(),
+                done: false,
+                archived: false
+            });
+            
+            console.log('Task added with ID:', docRef.id);
+            
+            // Reset the input fields
+            setTaskName('');
+            setTaskNotes('');
+            
+            closeModal();
+            updateDatabase(); // Refresh the task list
+        } catch (error) {
+            console.error('Error adding task:', error);
+        }
+    }
 
     return (
         <>

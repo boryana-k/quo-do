@@ -1,6 +1,18 @@
-import { createClient } from "@supabase/supabase-js";
+import { initializeApp } from "firebase/app";
+import { getFirestore } from 'firebase/firestore';
 
-export const supabase = createClient(
-    "https://bqdrzuevafefeiitbqed.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJxZHJ6dWV2YWZlZmVpaXRicWVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU4MjQ5MjEsImV4cCI6MjA0MTQwMDkyMX0.vKRA4rk5JWZbXBIPcUbxsezCCA2VLL344hQ5MaYGH20"
-)
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey:  import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain:  import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId:  import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket:  import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId:  import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId:  import.meta.env.VITE_FIREBASE_APP_ID
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
+
+console.log('Project ID:', import.meta.env.VITE_FIREBASE_PROJECT_ID);
