@@ -1,24 +1,10 @@
-import { useState } from 'react';
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import { IoIosAdd } from "react-icons/io";
-import { addDoc, collection, setDoc } from 'firebase/firestore';
-import { db } from '../firebase';
 import TaskModal from './TaskModal';
+import {useModal} from '../utils/utils';
 
 function AddTask({updateDatabase, token}) {
-
-    //control the modal visibility
-    const [visible, setVisible] = useState(false);
-
-    // function to open the modal
-    function openModal() {
-        setVisible(true);
-    };
-
-    // close modal
-    function closeModal() {
-        setVisible(false);
-    };
+    const { visible, openModal, closeModal } = useModal();
 
     return (
         <>

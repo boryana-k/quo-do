@@ -1,4 +1,4 @@
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, button } from "@nextui-org/react";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { addDoc, collection } from 'firebase/firestore';
 import { doc, updateDoc } from "firebase/firestore";
@@ -14,7 +14,7 @@ function TaskModal({task, closeModal, visible, updateDatabase}) {
      useEffect(() => {
         if (task) {
             setTaskName(task.name || '');
-            setTaskNotes(task.note || ''); // Changed from 'notes' to 'note'
+            setTaskNotes(task.notes || ''); // Changed from 'notes' to 'note'
         } else {
             setTaskName('');
             setTaskNotes('');
@@ -59,6 +59,7 @@ function TaskModal({task, closeModal, visible, updateDatabase}) {
         closeModal(); // modal close
         updateDatabase(); // Refresh the task list
     }
+    
     return (
         <>
             <Modal 

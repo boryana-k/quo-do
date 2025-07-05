@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 export const formatDate = (date) => {
     if (!(date instanceof Date)) {
         throw new Error('Input must be an instance of Date');
@@ -14,4 +16,17 @@ export const formatDate = (date) => {
     return `${day} ${month} ${year}`;
 };
 
+export const useModal = (initialState = false) => {
+    const [visible, setVisible] = useState(initialState);
 
+    const openModal = () => setVisible(true);
+    const closeModal = () => setVisible(false);
+    const toggleModal = () => setVisible(prev => !prev);
+
+    return {
+        visible,
+        openModal,
+        closeModal,
+        toggleModal
+    };
+};

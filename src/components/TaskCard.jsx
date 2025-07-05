@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { formatDate } from '../utils/utils';
-import {Button, Accordion, AccordionItem, Modal, ModalContent, ModalBody, ModalFooter, ModalHeader} from "@nextui-org/react";
+import { formatDate, useModal } from '../utils/utils';
+import {Button, Accordion, AccordionItem } from "@nextui-org/react";
 import { GoTrash, GoTasklist } from "react-icons/go";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { AiOutlineEdit } from "react-icons/ai";
@@ -15,9 +14,7 @@ function TaskCard({task, updateDatabase}) {
     // Format the date (e.g., "dd-mm-yyyy")
     const formattedDate = formatDate(createdAt);
 
-    // const [isMarketAsDone, setisMarketAsDone] = useState(false)
-
-    const [visible, setVisible] = useState(false);
+    const { visible, openModal, closeModal } = useModal();
 
     async function updateTask(action) {
     
@@ -69,16 +66,7 @@ function TaskCard({task, updateDatabase}) {
 
         updateDatabase();
     }
-
-    // function to open the modal
-    function openModal() {
-        setVisible(true);
-    };
-
-    // close modal
-    function closeModal() {
-        setVisible(false);
-    };
+    
     return(
         <div className="w-full border-t-[0.5px] border-border-color py-4">
             <Accordion className='dark' variant="splitted">
