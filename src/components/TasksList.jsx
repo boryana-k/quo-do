@@ -17,7 +17,7 @@ function TasksList({tasksList, updateDatabase}) {
         <div className="flex flex-col items-start gap-4 my-4">
 
             
-            <Tabs aria-label="Options" className="dark w-full" color="primary">
+            <Tabs aria-label="Options" className="dark w-full font-medium tracking-wide" color="primary">
                 <Tab 
                     key="all-tasks" 
                     title={
@@ -25,7 +25,7 @@ function TasksList({tasksList, updateDatabase}) {
                             All
                             ({all.length})
                         </>
-                    } 
+                    }
                     className="w-full"
                 >
                     { all && all.map(task => (

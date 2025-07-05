@@ -46,7 +46,7 @@ function Home() {
     return (
         <>
             <div className="flex items-center justify-between">
-                <h3 className="text-xl font-anek-kannada font-medium text-secondary">Hello</h3>
+                <h3 className="text-4xl font-venti font-black tracking-wide text-border-color uppercase">Hello, </h3>
                     <AddTask fetchTasks={fetchTasks} updateDatabase={updateDatabase}/>
             </div>
 

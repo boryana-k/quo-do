@@ -73,22 +73,24 @@ function TaskCard({task, updateDatabase}) {
                 <AccordionItem 
                     key={task.id} 
                     aria-label={'task' + task.id}
-                    startContent={<GoTasklist className="text-secondary" />}
-                    title={task.name} className="bg-bg-color" 
+                    // startContent={<GoTasklist className="text-secondary" />}
+                    title={task.name} 
+                    subtitle={`Date created: ${formattedDate}`}
+                    classNames={{
+                        title: 'text-xl font-medium text-text-secondary',
+                        subtitle: 'text-label-color font-thin text-sm',
+                    }}
                 >
                     <div className="w-full flex flex-col items-start text-start gap-4">
                         {
-                            task.notes && 
-                            <div className="font-light font-anek-kannada">
-                                <p className="text-xl">Task notes: </p>
+                            task.notes ? 
+                            <div className="font-light text-text-primary">
                                 <p className="text-md"> {task.notes} </p> 
+                            </div> : 
+                            <div className="font-light text-text-primary">
+                                <p className="text-md text-label-color"> No notes </p> 
                             </div>
                         }
-
-                        <div className="text-label-color font-anek-kannada font-thin">
-                            <p className="text-medium">Date created: </p>
-                            <p className="text-small">{formattedDate}</p>
-                        </div>
                     </div>
                     <div className="w-full flex items-start my-4 flex-wrap">
                         {
