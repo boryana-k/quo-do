@@ -72,7 +72,7 @@ function TaskCard({task, updateDatabase}) {
             <Accordion className='dark' variant="splitted">
                 <AccordionItem 
                     key={task.id} 
-                    aria-label={'task' + task.id} 
+                    aria-label={'task' + task.id}
                     startContent={<GoTasklist className="text-secondary" />}
                     title={task.name} className="bg-bg-color" 
                 >

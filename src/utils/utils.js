@@ -30,3 +30,11 @@ export const useModal = (initialState = false) => {
         toggleModal
     };
 };
+
+export const sortTasksByDate = (tasks, order = 'desc') => {
+    return tasks.sort((a, b) => {
+        const dateA = a.createdAt.toDate();
+        const dateB = b.createdAt.toDate();
+        return order === 'desc' ? dateB - dateA : dateA - dateB;
+    });
+};

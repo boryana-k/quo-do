@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { sortTasksByDate } from "../utils/utils";
 import TaskCard from "./TaskCard";
 import {Tabs, Tab} from "@nextui-org/tabs";
 
 
 function TasksList({tasksList, updateDatabase}) {
 
-    const all = tasksList.filter(task => !task.archived)
+    // Sort tasks by creation date (newest first)
+    const sortedTasks = sortTasksByDate(tasksList, 'desc');
+
+    const all = sortedTasks.filter(task => !task.archived)
     const doneTasks = all.filter(task => task.done);
     const notDone = all.filter(task => !task.done)
     const archived = tasksList.filter(task => task.archived)
