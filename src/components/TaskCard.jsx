@@ -66,7 +66,7 @@ function TaskCard({task, updateDatabase}) {
 
         updateDatabase();
     }
-    
+
     return(
         <div className="w-full border-t-[0.5px] border-border-color py-4">
             <Accordion className='dark' variant="splitted">
@@ -133,5 +133,6 @@ function TaskCard({task, updateDatabase}) {
         </div>
     );
 };
+
 
 export default TaskCard;
