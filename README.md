@@ -1,8 +1,38 @@
-# React + Vite
+# ✅ Quodo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Quodo** is a clean, focused to-do app built with **React**.  
 
-Currently, two official plugins are available:
+Designed for simplicity, Quodo helps you stay on top of your tasks by giving you a clear queue of what to do next — no distractions, no clutter.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**This project is part of my journey to strengthen my React skills through hands-on learning and building.**
+
+---
+
+## ✨ Features
+
+- 📌 Add new tasks quickly
+- ✅ Mark tasks as completed
+- 📦 Archive old tasks to keep things tidy
+- ❌ Delete tasks permanently
+- 📱 Clean, responsive UI
+
+---
+
+## 🎯 Philosophy
+
+> *Quodo* = *Queue* + *Do*
+
+The idea is simple: see what's next, do it, move on.  
+Quodo isn't about endless lists — it's about **focus**, **flow**, and **momentum**.
+
+---
+
+## 🛠 Tech Stack
+
+- React (with Hooks)
+- Tailwind CSS
+- NextUI
+- Vite
+- Firebase
+
+---
