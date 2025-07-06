@@ -1,17 +1,18 @@
 import './App.css'
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
-import Home from './Pages/Home';
-import {NextUIProvider} from "@nextui-org/react";
-import Welcome from './Pages/Welcome';
+import {HeroUIProvider, ToastProvider} from "@heroui/react";
+import Welcome from './pages/Welcome';
+import Home from './pages/Home';
 
 function App() {
   return (
-    <NextUIProvider>
+    <HeroUIProvider>
+      <ToastProvider />
       <Routes>
         <Route path="/" exact element={<Home />}></Route>
         <Route path="/welcome" exact element={<Welcome />}></Route>
       </Routes>
-    </NextUIProvider>
+    </HeroUIProvider>
   )
 }
 

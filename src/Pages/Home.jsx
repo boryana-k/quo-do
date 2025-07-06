@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import AddTask from "../components/AddTask";
 import TasksList from "../components/TasksList";
 import ListLabel from '../components/ListLabel';
-// import { supabase } from '../createClient';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 
@@ -46,7 +45,7 @@ function Home() {
     return (
         <>
             <div className="flex items-center justify-between">
-                <h3 className="text-4xl font-venti font-black tracking-wide text-border-color uppercase">Hello, </h3>
+                <h3 className="text-4xl font-venti font-black tracking-wide text-beige-900 uppercase">Hello, </h3>
                     <AddTask fetchTasks={fetchTasks} updateDatabase={updateDatabase}/>
             </div>
 

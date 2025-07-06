@@ -1,7 +1,8 @@
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import { IoIosAdd } from "react-icons/io";
 import TaskModal from './TaskModal';
-import {useModal} from '../utils/utils';
+import { useModal } from "../hooks/useModal";
+
 
 function AddTask({updateDatabase, token}) {
     const { visible, openModal, closeModal } = useModal();

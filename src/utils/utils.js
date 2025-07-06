@@ -16,20 +16,20 @@ export const formatDate = (date) => {
     return `${day} ${month} ${year}`;
 };
 
-export const useModal = (initialState = false) => {
-    const [visible, setVisible] = useState(initialState);
+// export const useModal = (initialState = false) => {
+//     const [visible, setVisible] = useState(initialState);
 
-    const openModal = () => setVisible(true);
-    const closeModal = () => setVisible(false);
-    const toggleModal = () => setVisible(prev => !prev);
+//     const openModal = () => setVisible(true);
+//     const closeModal = () => setVisible(false);
+//     const toggleModal = () => setVisible(prev => !prev);
 
-    return {
-        visible,
-        openModal,
-        closeModal,
-        toggleModal
-    };
-};
+//     return {
+//         visible,
+//         openModal,
+//         closeModal,
+//         toggleModal
+//     };
+// };
 
 export const sortTasksByDate = (tasks, order = 'desc') => {
     return tasks.sort((a, b) => {

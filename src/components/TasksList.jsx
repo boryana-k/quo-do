@@ -1,6 +1,6 @@
 import { sortTasksByDate } from "../utils/utils";
 import TaskCard from "./TaskCard";
-import {Tabs, Tab} from "@nextui-org/tabs";
+import {Tabs, Tab} from "@heroui/tabs";
 
 
 function TasksList({tasksList, updateDatabase}) {
@@ -17,7 +17,7 @@ function TasksList({tasksList, updateDatabase}) {
         <div className="flex flex-col items-start gap-4 my-4">
 
             
-            <Tabs aria-label="Options" className="dark w-full font-medium tracking-wide" color="primary">
+            <Tabs aria-label="Options" className=" w-full font-medium tracking-wide" radius="full" color="secondary">
                 <Tab 
                     key="all-tasks" 
                     title={

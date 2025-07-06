@@ -1,4 +1,4 @@
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@nextui-org/react";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, addToast, Input } from "@heroui/react";
 import { useEffect, useState } from "react";
 import { addDoc, collection } from 'firebase/firestore';
 import { doc, updateDoc } from "firebase/firestore";
@@ -10,6 +10,7 @@ function TaskModal({task, closeModal, visible, updateDatabase}) {
     // task details
     const [taskName, setTaskName] = useState(task ? task.name : '');
     const [taskNotes, setTaskNotes] = useState(task ? task.notes : '');
+    const [nameError, setNameError] = useState(''); // Add error state
 
      useEffect(() => {
         if (task) {
@@ -22,6 +23,17 @@ function TaskModal({task, closeModal, visible, updateDatabase}) {
     }, [task]);
 
     async function handleTask(name, notes) {
+        // Clear previous error
+        setNameError('');
+
+        // Validate name
+        if (!taskName.trim()) {
+            setNameError('Task name is required');
+            return;
+        }
+
+        let toastTitle = '';
+
         if(task) {
             try {
                 await updateDoc(doc(db, 'tasks', task.id), {
@@ -29,9 +41,8 @@ function TaskModal({task, closeModal, visible, updateDatabase}) {
                     notes: taskNotes,
                     createdAt: new Date() 
                 });
-    
                 
-                console.log('Task updated');
+                toastTitle = 'You successfully updated the task';
             } catch (error) {
                 console.error('Error updating task:', error);
             }
@@ -46,11 +57,22 @@ function TaskModal({task, closeModal, visible, updateDatabase}) {
                     archived: false
                 });
                 
-                console.log('Task added with ID:');
+                toastTitle = 'You successfully added the task';
             } catch (error) {
                 console.error('Error adding task:', error);
             }
         }
+
+        addToast({
+            title: toastTitle,
+            color: "success",
+            radius: "full",
+            timeout: 3000,
+            shouldShowTimeoutProgress: true,
+            classNames: {
+                title: 'text-start'
+            }
+        })
 
         // Reset the input fields
         setTaskName('');
@@ -66,34 +88,87 @@ function TaskModal({task, closeModal, visible, updateDatabase}) {
                 closeButton
                 isOpen={visible}
                 onClose={closeModal}
-                className="dark"
+                color="primary"
                 placement="center"
+                backdrop="blur"
+                classNames={{
+                    base: 'bg-[#edebe1e6]',
+                    backdrop: 'backdrop-opacity-100',
+                }}
             >
                 <ModalContent>
                     <ModalHeader className="flex flex-col gap-1">
                         {buttonText} task...
                     </ModalHeader>
                     <ModalBody>
-                        <input
+                        {/* <input
                             type="text"
                             value={taskName}
                             placeholder="task name"
                             className="py-2 px-4 rounded-xl"
                             onChange={(e) => setTaskName(e.target.value)}
+                        /> */}
+
+                         <Input
+                            type="text"
+                            value={taskName}
+                            // placeholder="task name"
+                            label="Task Name"
+                            color="secondary"
+                            classNames={{
+                                label: "text-black/50 dark:text-white/90",
+                                input: [
+                                    "text-black/50", 
+                                    "dark:text-white/90"
+                                ]
+                            }}
+                            isRequired
+                            isInvalid={nameError !== ''}
+                            errorMessage={nameError}
+                            onChange={(e) => {
+                                setTaskName(e.target.value);
+                                if (nameError) setNameError('');
+                            }}
                         />
-                        <input
+                        
+                        {/* <input
                             type="text"
                             value={taskNotes}
                             placeholder="task notes"
                             className="py-2 px-4 rounded-xl"
                             onChange={(e) => setTaskNotes(e.target.value)}
+                        /> */}
+
+                        <Input
+                            type="text"
+                            value={taskNotes}
+                            // placeholder="task notes"
+                            label="Task Notes"
+                            color="secondary" 
+                            classNames={{
+                                label: "text-black/50 dark:text-white/90",
+                                input: [
+                                    "text-black/50", 
+                                    "dark:text-white/90"
+                                ]
+                            }}
+                            onChange={(e) => setTaskNotes(e.target.value)}
                         />
+                        
                     </ModalBody>
                     <ModalFooter>
                         <Button  color="danger" variant="light" onPress={closeModal}>
                             Close
                         </Button>
-                        <Button color="primary" variant="light" onPress={handleTask}>
+                        {/* <Button color="success" variant="flat" onPress={handleTask}>
+                            {buttonText} task
+                        </Button> */}
+                        <Button 
+                            color="success" 
+                            variant="flat" 
+                            onPress={handleTask}
+                            // isDisabled={!taskName.trim()} // Disable if name is empty
+                        >
                             {buttonText} task
                         </Button>
                     </ModalFooter>
