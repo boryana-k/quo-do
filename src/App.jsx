@@ -1,8 +1,8 @@
 import './App.css'
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import {HeroUIProvider, ToastProvider} from "@heroui/react";
-import Welcome from './pages-temp/Welcome';
-import Home from './pages-temp/Home';
+import Welcome from './pages/Welcome';
+import Home from './pages/Home';
 
 function App() {
   return (
