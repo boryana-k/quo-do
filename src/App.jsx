@@ -1,8 +1,8 @@
 import './App.css'
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import {HeroUIProvider, ToastProvider} from "@heroui/react";
-// import Welcome from './pages/Welcome';
-import Home from './pages/Home';
+import Welcome from './pages-temp/Welcome';
+import Home from './pages-temp/Home';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       <ToastProvider />
       <Routes>
         <Route path="/" exact element={<Home />}></Route>
-        {/* <Route path="/welcome" exact element={<Welcome />}></Route> */}
+        <Route path="/welcome" exact element={<Welcome />}></Route>
       </Routes>
     </HeroUIProvider>
   )
