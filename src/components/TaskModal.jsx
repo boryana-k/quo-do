@@ -109,7 +109,7 @@ function TaskModal({task, closeModal, visible, updateDatabase}) {
                             onChange={(e) => setTaskName(e.target.value)}
                         /> */}
 
-                         <Input
+                        <Input
                             type="text"
                             value={taskName}
                             // placeholder="task name"

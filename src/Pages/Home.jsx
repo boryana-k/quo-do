@@ -43,7 +43,7 @@ function Home() {
     }
     
     return (
-        <>
+        <div className='flex flex-col w-full'>
             <div className="flex items-center justify-between">
                 <h3 className="text-4xl font-venti font-black tracking-wide text-beige-900 uppercase">Hello, </h3>
                     <AddTask fetchTasks={fetchTasks} updateDatabase={updateDatabase}/>
@@ -52,7 +52,7 @@ function Home() {
             { tasksList.length === 0 ? <ListLabel tasksList={tasksList}/> : ''} 
             
             <TasksList tasksList={tasksList} updateDatabase={updateDatabase}/> 
-        </>
+        </div>
     );
 };
 
